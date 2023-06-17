@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Readiam</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-firestore.js"></script>
+<script src="https://kit.fontawesome.com/50e4654d11.js" crossorigin="anonymous"></script>
+
+</head>
+
+
+<body id="main-content">
+    <div class="rgba-overlay">
+        <header id="header">
+
+            <div class="left">
+                <img src="logo.png" alt="" id="menuBtn">
+                <a href="index.html"> <span class="logo">READIAM</span></a>
+
+
+            </div>
+            <div class="middle">
+                <input type="search" placeholder="Search" class="search" id="searchBar">
+
+            </div>
+            <div class="right">
+                <div class="rightdiv-icon">
+
+                    <i class="fa-regular fa-bell" id="bell-icon"></i>
+                </div>
+                <div class="rightdiv-right">
+                    <span id="BeLogin" class="InfoMethod">Log In</span>
+                    <span id="beSignup" class="InfoMethod">Sign Up</span>
+                    <img src="logout.png" alt="" id="logout">
+                </div>
+            </div>
+        </header>
+
+        <div class="toggle-nav" id="aMenuWrapper">
+            <div class="top">
+                <ul>
+                    <li><a href="#"> <img src="home.png" alt=""> Home</a></li>
+
+                    <li><a href="#"> <img src="following.png" alt="">Following</a></li>
+                </ul>
+            </div>
+            <hr>
+            <div class="top-two">
+                <ul>
+                    <li><a href="#"> <img src="library.png" alt="">Library</a></li>
+                    <li><a href="#"> <img src="liked.png" alt="">Liked</a></li>
+                    <li><a href="#"> <img src="readlist.png" alt="">Readlist</a></li>
+                    <li><a href="#"> <img src="readlater.png" alt="">Read Later</a></li>
+                    <li><a href="#"> <img src="history.png" alt="">History</a></li>
+
+                </ul>
+            </div>
+            <hr>
+            <div class="center">
+                <ul>
+                    <li><a href="#"> <img src="member-4.png" alt=""> NASA</a></li>
+                    <li><a href="#"><img src="member-6.png" alt=""> CNBC</a></li>
+                    <li><a href="#"> <img src="photo2.png" alt="">MKBHD</a></li>
+                    <li><a href="#"> <img src="photo4.png" alt="">Chris Nolan</a></li>
+                    <li><a href="#"> <img src="more.png" alt="">Show 67 more</a></li>
+
+                </ul>
+            </div>
+            <hr>
+            <div class="bottom">
+                <ul>
+                    <li><a href="#"> <img src="settings.png" alt="">Settings</a></li>
+                    <li><a href="#"> <img src="feedback.png" alt="">Feedback</a></li>
+                    <li><a href="#"> <img src="help.png" alt="">Help</a></li>
+
+
+                </ul>
+            </div>
+        </div>
+
+        <main>
+
+            <div class="container">
+
+                <div class="formWrapper">
+                    <form action="#" id="signin-form">
+                        <div class="logo">
+                            <span class="textLogo">READIAM</span>
+                            <span class="login">Log In</span>
+                        </div>
+                        <div class="input-fields">
+                            <div class="input-field">
+                                <input type="email" id="signin-email" required placeholder="Email">
+
+                            </div>
+                            <div class="input-field">
+                                <input type="password" id="signin-password" required placeholder="Pasword">
+
+                            </div>
+                            <button id="LoginBtn" class="submitForm">Log In</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="SecondformWrapper">
+                    <form action="" id="signup-form">
+                        <div class="logo">
+                            <span class="textLogo">READIAM</span>
+                            <span class="sign-up">Sign Up</span>
+                        </div>
+                        <div class="input-fields">
+                            <div class="input-field">
+                                <input type="email" id="signup-email" required placeholder="Email">
+
+                            </div>
+                            <div class="input-field">
+                                <input type="password" id="signup-password" required placeholder="Pasword">
+
+                            </div>
+                            <button id="SignupBtn" class="submitForm">Sign Up</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+            <div id="articles-container"></div>
+        </main>
+
+
+
+    </div>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAGsrqlLcUv_8x-Zai74rHQ26ib9lOvX78",
+            authDomain: "readiam-f8345.firebaseapp.com",
+            projectId: "readiam-f8345"
+            // ...other Firebase settings
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        // Make auth and firestore references
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+
+        // Update Firestore settings
+        db.settings({ timestampsInSnapshots: true, merge: true });
+
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                let removeSignup = document.getElementById('beSignup')
+                let removeElements = document.querySelector('.InfoMethod');
+                removeElements.classList.add('JustRemove');
+                removeSignup.classList.add('removeSignup');
+                let rightDiv = document.querySelector('.rightdiv-right');
+                let div = document.createElement('div');
+
+
+                rightDiv.appendChild(div);
+                div.classList.add('profileStyle');
+                let logOut = document.getElementById('logout');
+                logOut.classList.remove('NoLogout');
+                let bellIcon = document.getElementById('bell-icon');
+                bellIcon.classList.remove('removeBell');
+            } else {
+                let removeSignup = document.getElementById('beSignup')
+                let removeElements = document.querySelector('.InfoMethod');
+                removeElements.classList.remove('JustRemove');
+                removeSignup.classList.remove('removeSignup');
+                let img = document.createElement('img');
+                img.src = "profile.jpg";
+                img.classList.remove('profileStyle');
+
+                let logOut = document.getElementById('logout');
+                logOut.classList.add('NoLogout');
+
+                let bellIcon = document.getElementById('bell-icon');
+                bellIcon.classList.add('removeBell');
+
+
+            }
+        });
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const signupForm = document.querySelector('#signup-form');
+            signupForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const email = signupForm['signup-email'].value;
+                const password = signupForm['signup-password'].value;
+                auth.createUserWithEmailAndPassword(email, password).then(cred => {
+
+                    const modal = document.querySelector('#signup-form');
+                    modal.classList.remove('open');
+                    modal.classList.add('closed');
+                    signupForm.reset();
+
+                });
+            });
+
+            const modal = document.querySelector('#signup-form');
+            M.Modal.init(modal);
+        });
+
+        //logout
+        const logout = document.querySelector('#logout');
+        logout.addEventListener('click', (e) => {
+            e.preventDefault();
+            auth.signOut();
+        })
+
+        //LogIn
+
+        const loginForm = document.querySelector('#signin-form');
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // get info
+
+            const email = loginForm['signin-email'].value;
+            const password = loginForm['signin-password'].value;
+
+            auth.signInWithEmailAndPassword(email, password).then(cred => {
+
+                const modal = document.querySelector('#signin-form');
+                modal.classList.remove('open');
+                modal.classList.add('closed');
+                loginForm.reset();
+
+            })
+        })
+
+    </script>
+    <script>
+
+        const container = document.getElementById('articles-container');
+
+        fetch('articles.json')
+            .then(response => response.json())
+            .then(data => {
+                // Sort the articles based on a property (e.g., timestamp, publication date)
+                const sortedArticles = data.sort((a, b) => a.timestamp - b.timestamp);
+
+                // Create HTML elements for each article
+                sortedArticles.forEach(article => {
+                    // Create article container
+                    const articleElement = document.createElement('div');
+                    articleElement.classList.add('article'); // Add a CSS class to the article container
+
+                    articleElement.addEventListener('click', () => {
+                        window.location.href = 'article.html'; // Replace 'page.html' with the actual path to your desired page
+                    });
+                    // Create image element
+                    const imageElement = document.createElement('img');
+                    imageElement.src = article.image;
+                    imageElement.alt = 'Article Image';
+                    imageElement.classList.add('article-image'); // Add a CSS class to the image element
+
+                    // Create div to wrap h2 and profile-div
+                    const titleProfileDiv = document.createElement('div');
+                    titleProfileDiv.classList.add('title-profile-div');
+
+                    // Create title element
+                    const titleElement = document.createElement('h2');
+                    titleElement.textContent = article.title;
+                    titleElement.classList.add('article-title'); // Add a CSS class to the title element
+
+                    // Create profile div
+                    const profileDiv = document.createElement('div');
+                    profileDiv.classList.add('profile-div');
+
+                    // Create profile picture element
+                    const profilePicElement = document.createElement('img');
+                    profilePicElement.src = article.profilePic;
+                    profilePicElement.alt = 'Profile Picture';
+                    profilePicElement.classList.add('profile-pic'); // Add a CSS class to the profile picture element
+
+                    // Create name element
+                    const nameElement = document.createElement('span');
+                    nameElement.textContent = article.name;
+                    nameElement.classList.add('profile-name'); // Add a CSS class to the name element
+
+                    // Create time ago element
+                    const timeAgoElement = document.createElement('span');
+                    timeAgoElement.textContent = article.timeAgo;
+                    timeAgoElement.classList.add('time-ago'); // Add a CSS class to the time ago element
+
+                    // Create reads element
+                    const readsElement = document.createElement('span');
+                    readsElement.textContent = article.reads;
+                    readsElement.classList.add('reads'); // Add a CSS class to the reads element
+
+                    const MinReadElement = document.createElement('span');
+                    MinReadElement.textContent = article.MinRead;
+                    MinReadElement.classList.add('Min-Read'); // Add a CSS class to the time ago element
+
+                    // Append profile picture, name, time ago, and reads to the profile div
+                    profileDiv.appendChild(profilePicElement);
+                    profileDiv.appendChild(nameElement);
+                    profileDiv.appendChild(timeAgoElement);
+                    profileDiv.appendChild(readsElement);
+                    profileDiv.appendChild(MinReadElement);
+
+                    // Append title and profile-div to the titleProfileDiv
+                    titleProfileDiv.appendChild(titleElement);
+                    titleProfileDiv.appendChild(profileDiv);
+
+                    // Append elements to the article container
+                    articleElement.appendChild(imageElement);
+                    articleElement.appendChild(titleProfileDiv);
+
+                    // Create a p tag for additional content below the profile-div
+                    const additionalContent = document.createElement('p');
+                    additionalContent.textContent = article.paragraph;
+                    additionalContent.classList.add('textStyle');
+
+                    // Append additional content below the profile-div
+                    titleProfileDiv.appendChild(additionalContent);
+
+                    // Append article container to the main container
+                    container.appendChild(articleElement);
+
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching JSON data:', error);
+            });
+
+
+        // Get a reference to the search bar element
+        const searchBar = document.getElementById('searchBar');
+
+        // Add event listener for user input
+        searchBar.addEventListener('input', function () {
+            // Retrieve the user input from the search bar
+            const searchQuery = searchBar.value.toLowerCase();
+
+            // Get all the article elements
+            const articleElements = document.getElementsByClassName('article');
+
+            // Iterate through each article element
+            for (let i = 0; i < articleElements.length; i++) {
+                const articleElement = articleElements[i];
+                const titleElement = articleElement.querySelector('.article-title');
+
+                // Get the title text of the article
+                const articleTitle = titleElement.textContent.toLowerCase();
+
+                // Check if the article title matches the search query
+                if (articleTitle.includes(searchQuery)) {
+                    // If the article matches, display it
+                    articleElement.style.display = 'block';
+                } else {
+                    // If the article doesn't match, hide it
+                    articleElement.style.display = 'none';
+                }
+            }
+        });
+
+
+
+        const menuBtn = document.getElementById('menuBtn');
+const menuWrapper = document.getElementById('aMenuWrapper');
+const clickClose = document.getElementById('clickClose');
+
+// Hide the menu initially
+menuWrapper.style.display = 'none';
+menuWrapper.style.opacity = '0';
+
+menuBtn.addEventListener('click', function () {
+  menuWrapper.style.display = menuWrapper.style.display === 'none' ? 'flex' : 'none';
+  menuWrapper.style.transition = 'opacity 0.5s ease-in-out';
+  menuWrapper.style.opacity = menuWrapper.style.display === 'none' ? '0' : '1';
+});
+
+clickClose.addEventListener('click', function () {
+  menuWrapper.style.transition = 'opacity 0.5s ease-in-out';
+  menuWrapper.style.opacity = '0';
+  setTimeout(function () {
+    menuWrapper.style.display = 'none';
+  }, 500);
+});
+
+
+    </script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="script.js"></script>
+    <script src="auth.js"></script>
+</body>
+
+</html>
