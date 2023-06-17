@@ -777,3 +777,29 @@ main {
     display: inline-block;
     color: #666666;
 }
+
+
+@media (max-width: 768px) {
+    #header {
+        display: none;
+    }
+    .container {
+        display: none;
+    }
+    #articles-container{
+        display: none;
+    }
+    #resH2 {
+        display: inline-block;
+        font-family: "Poppins";
+        color: #1070ff;
+    }
+    body {
+        background: #efefef;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: center;
+    padding-top: 200px;
+}
+    }
