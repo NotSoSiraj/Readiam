@@ -354,6 +354,10 @@ main {
     height: 66vh;
 }
 
+.article:hover{
+    background-color: rgb(236, 232, 232);
+}
+
 .toggle-nav {
     position: absolute;
     box-sizing: border-box;
