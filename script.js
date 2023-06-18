@@ -24,6 +24,8 @@ const loginLink = document.getElementById('BeLogin');
 const signupLink = document.getElementById('beSignup');
 const mainContent = document.getElementById('main-content');
 const theContainer = document.querySelector('.container');
+const formWrapperTwo = document.querySelector('.formWrapper');
+
 
 loginLink.addEventListener('click', function() {
   mainContent.classList.add('login-form-open');
@@ -37,6 +39,7 @@ signupLink.addEventListener('click', function() {
 
 document.getElementById('signin-form').addEventListener('submit', function() {
   mainContent.classList.remove('login-form-open');
+  theContainer.classList.remove('displayBlock');
   removeContainerBackgroundColor();
 });
 
@@ -64,4 +67,5 @@ function toggleContainerBackgroundColor() {
 function removeContainerBackgroundColor() {
   theContainer.classList.remove('rgba');
 }
+
 
