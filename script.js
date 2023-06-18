@@ -50,7 +50,6 @@ document.getElementById('signup-form').addEventListener('submit', function() {
 
 const rgbaContainerLinks = document.querySelectorAll('.InfoMethod');
 
-// Add event listeners to the links
 rgbaContainerLinks.forEach((InfoMethod) => {
   InfoMethod.addEventListener('click', function(event) {
     event.preventDefault();
@@ -58,12 +57,10 @@ rgbaContainerLinks.forEach((InfoMethod) => {
   });
 });
 
-// Function to toggle the background color of the container
 function toggleContainerBackgroundColor() {
   theContainer.classList.toggle('rgba');
 }
 
-// Function to remove the background color from the container
 function removeContainerBackgroundColor() {
   theContainer.classList.remove('rgba');
 }
