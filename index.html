@@ -17,7 +17,7 @@
 
 
 <body id="main-content">
-     <h2 id="resH2">SOONER THAN YOU THINK</h2>
+   
     <div class="rgba-overlay">
         <header id="header">
 
@@ -39,6 +39,7 @@
                 <div class="rightdiv-right">
                     <span id="BeLogin" class="InfoMethod">Log In</span>
                     <span id="beSignup" class="InfoMethod">Sign Up</span>
+                   <a id="dark">Appearance <i class="fa-solid fa-circle-half-stroke" style="color: #000000;"></i></a>
                     <img src="logout.png" alt="" id="logout">
                 </div>
             </div>
@@ -47,39 +48,39 @@
         <div class="toggle-nav" id="aMenuWrapper">
             <div class="top">
                 <ul>
-                    <li><a href="#"> <img src="home.png" alt=""> Home</a></li>
+                    <li><a href="#" class="anchorWhiteTwo"> <img src="home.png" alt=""> Home</a></li>
 
-                    <li><a href="#"> <img src="following.png" alt="">Following</a></li>
+                    <li><a href="#" class="anchorWhiteTwo"> <img src="following.png" alt="">Following</a></li>
                 </ul>
             </div>
             <hr>
             <div class="top-two">
                 <ul>
-                    <li><a href="#"> <img src="library.png" alt="">Library</a></li>
-                    <li><a href="#"> <img src="liked.png" alt="">Liked</a></li>
-                    <li><a href="#"> <img src="readlist.png" alt="">Readlist</a></li>
-                    <li><a href="#"> <img src="readlater.png" alt="">Read Later</a></li>
-                    <li><a href="#"> <img src="history.png" alt="">History</a></li>
+                    <li><a href="#" class="anchorWhiteTwo"> <img src="library.png" alt="">Library</a></li>
+                    <li><a href="#" class="anchorWhiteTwo"> <img src="liked.png" alt="">Liked</a></li>
+                    <li><a href="#" class="anchorWhiteTwo"> <img src="readlist.png" alt="">Readlist</a></li>
+                    <li><a href="#" class="anchorWhiteTwo"> <img src="readlater.png" alt="">Read Later</a></li>
+                    <li><a href="#" class="anchorWhiteTwo"> <img src="history.png" alt="">History</a></li>
 
                 </ul>
             </div>
             <hr>
             <div class="center">
                 <ul>
-                    <li><a href="#"> <img src="member-4.png" alt=""> NASA</a></li>
-                    <li><a href="#"><img src="member-6.png" alt=""> CNBC</a></li>
-                    <li><a href="#"> <img src="photo2.png" alt="">MKBHD</a></li>
-                    <li><a href="#"> <img src="photo4.png" alt="">Chris Nolan</a></li>
-                    <li><a href="#"> <img src="more.png" alt="">Show 67 more</a></li>
+                    <li><a href="#" class="anchorWhiteTwo"> <img src="member-4.png" alt=""> NASA</a></li>
+                    <li><a href="#" class="anchorWhiteTwo"><img src="member-6.png" alt=""> CNBC</a></li>
+                    <li><a href="#" class="anchorWhiteTwo"> <img src="photo2.png" alt="">MKBHD</a></li>
+                    <li><a href="#" class="anchorWhiteTwo"> <img src="photo4.png" alt="">Chris Nolan</a></li>
+                    <li><a href="#" class="anchorWhiteTwo"> <img src="more.png" alt="">Show 67 more</a></li>
 
                 </ul>
             </div>
             <hr>
             <div class="bottom">
                 <ul>
-                    <li><a href="#"> <img src="settings.png" alt="">Settings</a></li>
-                    <li><a href="#"> <img src="feedback.png" alt="">Feedback</a></li>
-                    <li><a href="#"> <img src="help.png" alt="">Help</a></li>
+                    <li><a href="#" class="anchorWhiteTwo"> <img src="settings.png" alt="">Settings</a></li>
+                    <li><a href="#" class="anchorWhiteTwo"> <img src="feedback.png" alt="">Feedback</a></li>
+                    <li><a href="#" class="anchorWhiteTwo"> <img src="help.png" alt="">Help</a></li>
 
 
                 </ul>
@@ -143,16 +144,16 @@
             apiKey: "AIzaSyAGsrqlLcUv_8x-Zai74rHQ26ib9lOvX78",
             authDomain: "readiam-f8345.firebaseapp.com",
             projectId: "readiam-f8345"
-           
+            // ...other Firebase settings
         };
         firebase.initializeApp(firebaseConfig);
 
-       
+        // Make auth and firestore references
         const auth = firebase.auth();
         const db = firebase.firestore();
 
 
-      
+        // Update Firestore settings
         db.settings({ timestampsInSnapshots: true, merge: true });
 
         auth.onAuthStateChanged(user => {
@@ -248,86 +249,86 @@
         fetch('articles.json')
             .then(response => response.json())
             .then(data => {
-               
+                // Sort the articles based on a property (e.g., timestamp, publication date)
                 const sortedArticles = data.sort((a, b) => a.timestamp - b.timestamp);
 
-                // Creating HTML elements for each article
+                // Create HTML elements for each article
                 sortedArticles.forEach(article => {
-                    // Creating article container
+                    // Create article container
                     const articleElement = document.createElement('div');
-                    articleElement.classList.add('article'); // Adding a CSS class to the article container
+                    articleElement.classList.add('article'); // Add a CSS class to the article container
 
                     articleElement.addEventListener('click', () => {
-                        window.location.href = 'article.html'; 
+                        window.location.href = 'article.html'; // Replace 'page.html' with the actual path to your desired page
                     });
-              
+                    // Create image element
                     const imageElement = document.createElement('img');
                     imageElement.src = article.image;
                     imageElement.alt = 'Article Image';
-                    imageElement.classList.add('article-image'); 
+                    imageElement.classList.add('article-image'); // Add a CSS class to the image element
 
-                
+                    // Create div to wrap h2 and profile-div
                     const titleProfileDiv = document.createElement('div');
                     titleProfileDiv.classList.add('title-profile-div');
 
-                    
+                    // Create title element
                     const titleElement = document.createElement('h2');
                     titleElement.textContent = article.title;
-                    titleElement.classList.add('article-title'); 
+                    titleElement.classList.add('article-title'); // Add a CSS class to the title element
 
-                   
+                    // Create profile div
                     const profileDiv = document.createElement('div');
                     profileDiv.classList.add('profile-div');
 
-                 
+                    // Create profile picture element
                     const profilePicElement = document.createElement('img');
                     profilePicElement.src = article.profilePic;
                     profilePicElement.alt = 'Profile Picture';
-                    profilePicElement.classList.add('profile-pic'); t
+                    profilePicElement.classList.add('profile-pic'); // Add a CSS class to the profile picture element
 
-          
+                    // Create name element
                     const nameElement = document.createElement('span');
                     nameElement.textContent = article.name;
-                    nameElement.classList.add('profile-name'); 
+                    nameElement.classList.add('profile-name'); // Add a CSS class to the name element
 
-    
+                    // Create time ago element
                     const timeAgoElement = document.createElement('span');
                     timeAgoElement.textContent = article.timeAgo;
-                    timeAgoElement.classList.add('time-ago'); 
+                    timeAgoElement.classList.add('time-ago'); // Add a CSS class to the time ago element
 
-               
+                    // Create reads element
                     const readsElement = document.createElement('span');
                     readsElement.textContent = article.reads;
-                    readsElement.classList.add('reads');
+                    readsElement.classList.add('reads'); // Add a CSS class to the reads element
 
                     const MinReadElement = document.createElement('span');
                     MinReadElement.textContent = article.MinRead;
-                    MinReadElement.classList.add('Min-Read'); 
+                    MinReadElement.classList.add('Min-Read'); // Add a CSS class to the time ago element
 
-                  
+                    // Append profile picture, name, time ago, and reads to the profile div
                     profileDiv.appendChild(profilePicElement);
                     profileDiv.appendChild(nameElement);
                     profileDiv.appendChild(timeAgoElement);
                     profileDiv.appendChild(readsElement);
                     profileDiv.appendChild(MinReadElement);
 
-                   
+                    // Append title and profile-div to the titleProfileDiv
                     titleProfileDiv.appendChild(titleElement);
                     titleProfileDiv.appendChild(profileDiv);
 
-                   
+                    // Append elements to the article container
                     articleElement.appendChild(imageElement);
                     articleElement.appendChild(titleProfileDiv);
 
-                  
+                    // Create a p tag for additional content below the profile-div
                     const additionalContent = document.createElement('p');
                     additionalContent.textContent = article.paragraph;
                     additionalContent.classList.add('textStyle');
 
-                   
+                    // Append additional content below the profile-div
                     titleProfileDiv.appendChild(additionalContent);
 
-                   
+                    // Append article container to the main container
                     container.appendChild(articleElement);
 
                 });
@@ -337,31 +338,31 @@
             });
 
 
-    
+        // Get a reference to the search bar element
         const searchBar = document.getElementById('searchBar');
 
-      
+        // Add event listener for user input
         searchBar.addEventListener('input', function () {
-           
+            // Retrieve the user input from the search bar
             const searchQuery = searchBar.value.toLowerCase();
 
-          
+            // Get all the article elements
             const articleElements = document.getElementsByClassName('article');
 
-         
+            // Iterate through each article element
             for (let i = 0; i < articleElements.length; i++) {
                 const articleElement = articleElements[i];
                 const titleElement = articleElement.querySelector('.article-title');
 
-              
+                // Get the title text of the article
                 const articleTitle = titleElement.textContent.toLowerCase();
 
-             
+                // Check if the article title matches the search query
                 if (articleTitle.includes(searchQuery)) {
-                   
+                    // If the article matches, display it
                     articleElement.style.display = 'block';
                 } else {
-                    
+                    // If the article doesn't match, hide it
                     articleElement.style.display = 'none';
                 }
             }
@@ -373,7 +374,7 @@
 const menuWrapper = document.getElementById('aMenuWrapper');
 const clickClose = document.getElementById('clickClose');
 
-
+// Hide the menu initially
 menuWrapper.style.display = 'none';
 menuWrapper.style.opacity = '0';
 
