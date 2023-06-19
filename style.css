@@ -112,12 +112,14 @@ main {
     padding-top: 35px;
 
     height: 290vh;
-   display: none;
+    display: none;
     position: absolute;
 }
+
 .liked {
     color: #1070ff;
 }
+
 .displayBlock {
     display: inline-block !important;
 }
@@ -291,6 +293,10 @@ main {
     display: none !important;
 }
 
+.article:hover {
+    background-color: rgb(236, 232, 232);
+}
+
 #articles-container {
     width: 100%;
     height: 74%;
@@ -345,6 +351,7 @@ main {
 .article {
     display: flex;
     flex-direction: column;
+    border: 1px solid #ffffff;
     overflow: hidden;
     background: white;
     border-radius: 10px;
@@ -352,10 +359,6 @@ main {
     gap: 10px;
     width: 29vw;
     height: 66vh;
-}
-
-.article:hover{
-    background-color: rgb(236, 232, 232);
 }
 
 .toggle-nav {
@@ -530,10 +533,11 @@ main {
 .Engages li a {
     text-decoration: none;
     display: flex;
-    color: black;
+    background: none !important;
     font-size: 19px;
     align-items: center;
     justify-content: center;
+    color: black;
     font-family: "Poppins";
     gap: 5px;
     font-weight: 600;
@@ -763,6 +767,7 @@ main {
 .commentEngagement li a {
     text-decoration: none;
     color: black;
+    background: none !important;
     font-family: "Poppins";
     font-size: 14px;
     margin-top: 6px;
@@ -782,30 +787,166 @@ main {
     color: #666666;
 }
 
-#resH2 {
-    display: none;
-}
-@media (max-width: 768px) {
-    #header {
-        display: none;
-    }
-    .container {
-        display: none;
-    }
-    #articles-container{
-        display: none;
-    }
+
+
+@media (max-width: 468px) {
+
     #resH2 {
         display: inline-block;
         font-family: "Poppins";
         color: #1070ff;
     }
-    body {
-        background: #efefef;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    text-align: center;
-    padding-top: 200px;
+
 }
-    }
+
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 24px;
+    left: 94%;
+    right: 0;
+    bottom: 0;
+    height: 34px;
+    width: 69px;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: #333333;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.darkk {
+    background-color: #181717 !important;
+    transition: 0.4s all ease-in-out;
+}
+
+.darkArticle {
+   background-color: #252424 !important;
+    border: 1px solid #272626;
+    transition: 0.4s all ease-in-out;
+    color: white;
+
+}
+
+.darkArticle:hover {
+    background-color: #383838 !important;
+}
+
+.darkProfile {
+    color: white !important;
+}
+
+.paraDark {
+    color: white !important;
+}
+
+.spanWhitePara {
+    color: #d3d3d3 !important;
+}
+
+.whiteProfile {
+    color: white !important;
+}
+
+.whiteComment {
+    background: #4c4a4a;
+    color: white;
+}
+
+.Whitei {
+    color: white !important;
+}
+
+.blackUsers {
+    color: white !;
+}
+
+.darkToggle {
+    background-color: #181717 !important;
+    transition: 0.4s all ease-in-out !important;
+}
+
+.darkAnchor {
+    background-color: #1070ff !important;
+    color: white !important;
+
+}
+
+.whiteHead {
+    color: white !important;
+}
+
+.whitePara {
+    color: white !important;
+}
+
+.whiteDetails {
+    color: #dfdfdf !important;
+}
+
+#dark {
+
+    color: white;
+    font-size: 17px;
+    background: transparent;
+    text-decoration: none;
+    border: none;
+    font-family: "Poppins";
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+#dark i {
+    font-size: 22px;
+
+}
